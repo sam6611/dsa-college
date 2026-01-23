@@ -47,9 +47,6 @@ class Solution {
             else if(arr[i]>=thirdmaxi){
                 thirdmaxi=arr[i];
             }
-            
-        
-       
         }
         return thirdmaxi;   
     }
@@ -75,10 +72,73 @@ public:
         return maxcount;
         
     }
+};
 
 
 
 
 
 
+// sets
+#include <iostream>
+#include<set>
+using namespace std;
+int main() {
+set<int> s;
+s.insert(0);
+s.emplace(2);
+s.emplace(4);
+s.emplace(6);
+s.emplace(8);
+s.emplace(10);
+for(auto it : s){
+    cout<<it*it<<" ";
+}
+if(s.find(7)!=s.end()){
+    cout<<"found";
+}
+else{
+    cout<<"not found";
+}
+    return 0;
+}
+
+
+
+
+
+/*Function to find frequency of x
+ * x : element whose frequency is to be found
+ * arr : input vector
+ */
+class Solution {
+  public:
+    int findFrequency(vector<int> arr, int x) {
+        // Your code here
+        unordered_map<int,int> freq;
+        for(int i=0;i<arr.size();i++){
+            freq[arr[i]]++;
+        }
+        return freq[x];
+    }
+};
+
+
+
+// twice counter GFG
+class Solution {
+  public:
+    int countWords(string list[], int n) {
+        unordered_map<string,int> sat;
+        for(int i=0;i<n;i++){
+            sat[list[i]]++;
+        }
+        int count=0;
+        for(auto s: sat){
+            if(s.second==2){
+                count++;
+            }
+        }
+        return count;
+    }
 };
