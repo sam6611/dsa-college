@@ -1,0 +1,43 @@
+#include <unordered_map>
+#include <unordered_set>
+#include <queue>
+using namespace std;
+
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        unordered_map<TreeNode*, TreeNode*> parent;
+        queue<TreeNode*> qu;
+
+        parent[root] = NULL;
+        qu.push(root);
+
+        while (!parent.count(p) || !parent.count(q)) {
+            TreeNode* curr = qu.front();
+            qu.pop();
+
+            if (curr->left) {
+                parent[curr->left] = curr;
+                qu.push(curr->left);
+            }
+
+            if (curr->right) {
+                parent[curr->right] = curr;
+                qu.push(curr->right);
+            }
+        }
+
+        unordered_set<TreeNode*> ancestors;
+
+        while (p) {
+            ancestors.insert(p);
+            p = parent[p];
+        }
+
+        while (!ancestors.count(q)) {
+            q = parent[q];
+        }
+
+        return q;
+    }
+};

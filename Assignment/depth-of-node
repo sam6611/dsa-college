@@ -1,0 +1,22 @@
+class Solution {
+  public:
+  
+    int solve(Node* root, int depth) {
+        if (root == NULL)
+            return 0;
+
+        // Check if leaf node and odd value
+        if (root->left == NULL && root->right == NULL && root->data % 2 != 0)
+            return depth;
+
+        // Check left and right subtree
+        int left = solve(root->left, depth + 1);
+        int right = solve(root->right, depth + 1);
+
+        return max(left, right);
+    }
+
+    int depthOfOddLeaf(Node *root) {
+        return solve(root, 1);
+    }
+};
