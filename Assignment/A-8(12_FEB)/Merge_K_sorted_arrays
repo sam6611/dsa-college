@@ -1,0 +1,80 @@
+#include <stdlib.h>
+
+typedef struct {
+    int value;
+    int row;
+    int col;
+} Node;
+
+void swap(Node* a, Node* b) {
+    Node temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void heapify(Node heap[], int size, int i) {
+    int smallest = i;
+    int left = 2*i + 1;
+    int right = 2*i + 2;
+
+    if (left < size && heap[left].value < heap[smallest].value)
+        smallest = left;
+
+    if (right < size && heap[right].value < heap[smallest].value)
+        smallest = right;
+
+    if (smallest != i) {
+        swap(&heap[i], &heap[smallest]);
+        heapify(heap, size, smallest);
+    }
+}
+
+int* solve(int** A, int n11, int n12, int *len1) {
+    
+    int total = n11 * n12;
+    *len1 = total;
+
+    int* result = (int*)malloc(total * sizeof(int));
+
+    if (n11 == 0 || n12 == 0)
+        return result;
+
+    // Create heap of size n11
+    Node* heap = (Node*)malloc(n11 * sizeof(Node));
+    int heapSize = n11;
+
+    // Initialize heap with first element of each row
+    for (int i = 0; i < n11; i++) {
+        heap[i].value = A[i][0];
+        heap[i].row = i;
+        heap[i].col = 0;
+    }
+
+    // Build heap
+    for (int i = n11/2 - 1; i >= 0; i--) {
+        heapify(heap, heapSize, i);
+    }
+
+    int index = 0;
+
+    while (heapSize > 0) {
+
+        // Extract min
+        Node root = heap[0];
+        result[index++] = root.value;
+
+        if (root.col + 1 < n12) {
+            heap[0].value = A[root.row][root.col + 1];
+            heap[0].row = root.row;
+            heap[0].col = root.col + 1;
+        } else {
+            heap[0] = heap[heapSize - 1];
+            heapSize--;
+        }
+
+        heapify(heap, heapSize, 0);
+    }
+
+    free(heap);
+    return result;
+}

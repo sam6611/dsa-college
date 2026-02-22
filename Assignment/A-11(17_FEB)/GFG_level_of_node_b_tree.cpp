@@ -1,12 +1,16 @@
-/*
-Structure of the node of the binary tree is
+#include <algorithm>
+#include <cmath>
+#include <vector>
+#include <stack>
+#include <string>
+using namespace std;
 struct Node
 {
     int data;
     struct Node *left;
     struct Node *right;
 };
-*/
+
 class Solution {
   public:
 

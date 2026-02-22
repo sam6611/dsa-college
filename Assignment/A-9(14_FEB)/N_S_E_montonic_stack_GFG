@@ -1,0 +1,27 @@
+#include <vector>
+#include <stack>
+using namespace std;
+class Solution {
+  public:
+    vector<int> nextSmallerEle(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> result(n);
+        stack<int> st;
+
+        for (int i = n - 1; i >= 0; i--) {
+
+            // Remove elements >= current
+            while (!st.empty() && st.top() >= arr[i]) {
+                st.pop();
+            }
+
+            // If stack empty → no smaller element
+            result[i] = st.empty() ? -1 : st.top();
+
+            // Push current element
+            st.push(arr[i]);
+        }
+
+        return result;
+    }
+};
